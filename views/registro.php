@@ -9,13 +9,50 @@
 </head>
 
 <body>
+    <script>
+        function validarUsuario() {
+            var usuario = document.getElementById("usuario").value;
+            var errorMsg = "";
+            if (usuario.length < 8) {
+                errorMsg += "El usuario debe tener al menos 8 caracteres.\n";
+            }
+            if (!/[A-Z]/.test(usuario)) {
+                errorMsg += "El usuario debe contener al menos una letra mayúscula.\n";
+            }
+            var simbolosEspeciales = /[\(\)\$\%\"!\/&\"=]/;
+            if (!simbolosEspeciales.test(usuario)) {
+                errorMsg += 'El usuario debe contener al menos un símbolo especial: ( ) $ % " ! / & " =';
+            }
+            if (errorMsg) {
+                alert(errorMsg);
+                return false;
+            }
+            return true;
+        }
+    </script>
+    <header>
+        <nav>
+            <ul>
+                <li> <a href="../views/login.php">Iniciar sesión</a></li>
+            </ul>
+        </nav>
+    </header>
     <div class="container">
-        <form action="../php/registro.php" method="POST">
-            <label for="correo">Correo electrónico</label>
-            <input type="email" id="correo" name="correo" required>
+        <form onsubmit="return validarUsuario()" action="../php/registro.php" method="POST">
+            <label for="usuario">Usuario</label>
+            <input type="text" id="usuario" name="usuario" minlength="8" required title="Email o nombre usuario">
 
-            <label for="nombre_usuario">Nombre de Usuario</label>
-            <input type="text" id="nombre_usuario" name="nombre_usuario" minlength="8" required>
+            <label for="rut">RUT</label>
+            <input type="text" id="rut" name="rut" minlength="9" maxlength="12" required>
+
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" required>
+
+            <label for="direccion">Dirección</label>
+            <input type="text" id="direccion" name="direccion" required>
+
+            <label for="telefono">Teléfono</label>
+            <input type="text" id="telefono" name="telefono" minlength="9" required>
 
             <label for="contrasena">Contraseña</label>
             <input type="password" id="contrasena" name="contrasena" required>

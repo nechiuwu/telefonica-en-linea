@@ -9,10 +9,17 @@
 </head>
 
 <body>
+    <header>
+        <nav>
+            <ul>
+                <li> <a href="../views/registro.php">Registrarse</a></li>
+            </ul>
+        </nav>
+    </header>
     <div class="container">
         <form action="../php/login.php" method="POST">
-            <label for="correo">Correo electrónico</label>
-            <input type="email" id="correo" name="correo" required>
+            <label for="usuario">Usuario</label>
+            <input type="text" id="usuario" name="usuario" required>
             <label for="contrasena">Contraseña</label>
             <input type="password" id="contrasena" name="contrasena" required>
             <button type="submit">Login</button>

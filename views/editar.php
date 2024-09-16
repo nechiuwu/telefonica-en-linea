@@ -4,18 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Cliente</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../styles/index.css">
 </head>
 
 <body>
+    <?php
+    session_start();
+    if (!isset($_SESSION['usuario_id'])) {
+        header("Location: ../views/login.php");
+        exit();
+    }
+    if ($_SESSION['rol'] !== 'agente'): ?>
+        header("Location: ../views/perfil.php");
+    <?php endif; ?>
     <header>
         <nav>
             <ul>
                 <li> <a href="../php/logout.php">Cerrar sesión</a></li>
+                <li><a href="../views/gestionar_clientes.php">Gestionar Clientes</a></li>
             </ul>
         </nav>
     </header>
-    <div class="container label-form input-form">
+    <div class="container">
         <?php
         include '../php/conexion.php';
 
@@ -53,7 +63,6 @@
 
             <button type="submit">Actualizar</button>
         </form>
-        <a href="gestionar_clientes.php">Volver a la gestión de clientes</a>
     </div>
 </body>
 
