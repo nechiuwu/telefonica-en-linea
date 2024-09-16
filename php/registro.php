@@ -17,23 +17,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = password_hash($contrasena, PASSWORD_DEFAULT);
 
     try {
-        $stmt = $pdo->prepare("INSERT INTO usuarios (nombre_usuario, contrasena, rol, estatus) VALUES (:nombre_usuario, :contrasena, :rol, 'activo')");
-        $stmt->bindParam(':nombre_usuario', $usuario);
-        $stmt->bindParam(':contrasena', $hashed_password);
-        $stmt->bindParam(':rol', $rol);
-        $stmt->execute();
+        $us = $mysqli->prepare("INSERT INTO usuarios (nombre_usuario, contrasena, rol, estatus) VALUES (:nombre_usuario, :contrasena, :rol, 'activo')");
+        $us->bind_param(':nombre_usuario', $usuario);
+        $us->bind_param(':contrasena', $hashed_password);
+        $us->bind_param(':rol', $rol);
+        $us->execute();
 
-        $usuario_id = $pdo->lastInsertId();
+        $usuario_id = $mysqli->insert_id;
 
         if ($rol === 'cliente') {
-            $stmt = $pdo->prepare("INSERT INTO clientes (id_usuario, rut, nombre, direccion, email, telefono, tipo_plan) VALUES (:id_usuario, :rut, :nombre_usuario, :direccion, :email, :telefono, 'normal')");
-            $stmt->bindParam(':id_usuario', $usuario_id);
-            $stmt->bindParam(':rut', $rut);
-            $stmt->bindParam(':nombre_usuario', $nombre);
-            $stmt->bindParam(':direccion', $direccion);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':telefono', $telefono);
-            $stmt->execute();
+            $cl = $mysqli->prepare("INSERT INTO clientes (id_usuario, rut, nombre, direccion, email, telefono, tipo_plan) VALUES (:id_usuario, :rut, :nombre_usuario, :direccion, :email, :telefono, 'normal')");
+            $cl->bind_param(':id_usuario', $usuario_id);
+            $cl->bind_param(':rut', $rut);
+            $cl->bind_param(':nombre_usuario', $nombre);
+            $cl->bind_param(':direccion', $direccion);
+            $cl->bind_param(':email', $email);
+            $cl->bind_param(':telefono', $telefono);
+            $cl->execute();
         }
 
         echo "Registro exitoso. <a href='../views/login.php'>Volver al login</a>";

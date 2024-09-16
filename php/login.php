@@ -7,9 +7,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contrasena = $_POST['contrasena'];
 
     $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE nombre_usuario = :usuario");
-    $stmt->bindParam(':usuario', $usuario);
+    $stmt->bind_param(':usuario', $usuario);
     $stmt->execute();
-    $usuarioDb = $stmt->fetch(PDO::FETCH_ASSOC);
+    $usuarioDb = $stmt->get_result();
 
     if ($usuarioDb && password_verify($contrasena, $usuarioDb['contrasena'])) {
         $_SESSION['usuario_id'] = $usuarioDb['id'];
