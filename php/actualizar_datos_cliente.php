@@ -20,15 +20,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     try {
-        $stmt = $pdo->prepare("UPDATE clientes SET nombre = :nombre, direccion = :direccion, email = :email, telefono = :telefono, tipo_plan = :tipo_plan WHERE id_usuario = :id_usuario");
-        $stmt->bindParam(':id_usuario', $id_usuario);
-        $stmt->bindParam(':nombre', $nombre);
-        $stmt->bindParam(':direccion', $direccion);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':telefono', $telefono);
-        $stmt->bindParam(':tipo_plan', $tipo_plan);
+        $stmt = $mysqli->prepare("UPDATE clientes SET nombre = :nombre, direccion = :direccion, email = :email, telefono = :telefono, tipo_plan = :tipo_plan WHERE id_usuario = :id_usuario");
+        $stmt->bind_param(':id_usuario', $id_usuario);
+        $stmt->bind_param(':nombre', $nombre);
+        $stmt->bind_param(':direccion', $direccion);
+        $stmt->bind_param(':email', $email);
+        $stmt->bind_param(':telefono', $telefono);
+        $stmt->bind_param(':tipo_plan', $tipo_plan);
         $stmt->execute();
 
+        $stmt->close();
+        $mysqli->close();
         header("Location: ../views/perfil.php");
     } catch (PDOException $e) {
         echo 'Error: ' . $e->getMessage();
